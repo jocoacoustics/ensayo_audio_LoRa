@@ -1,5 +1,7 @@
 # Jocotoco Messenger — GitHub Pages · v1.2.0
 
+https://jocoacoustics.github.io/ensayo_audio_LoRa/
+
 Sitio HTML estático **listo para subir directamente** a GitHub Pages. Autor: **Pedro Galindo**, Coordinación de Ciencia, IA y Tecnología Aplicada, Fundación Jocotoco.
 
 ## Para publicar
