@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#213c32">
+<meta name="description" content="Jocotoco Messenger: demostración urbana de audio y coordenadas por radio LoRa, sin cobertura celular entre dispositivos. Evidencia recuperada de ambos nodos.">
+<title>Jocotoco Messenger · Dos ensayos urbanos</title>
+<link rel="icon" type="image/svg+xml" href="assets/brand/jocotoco_logo_green.svg">
+<link rel="stylesheet" href="assets/css/jocotoco_base.css">
+<link rel="stylesheet" href="assets/css/messenger.css">
+<link rel="stylesheet" href="assets/css/ux_v11.css">
+</head>
+<body>
+<div class="app-shell" id="shell">
+<aside class="sidebar" aria-label="Navegación">
+  <div class="side-brand">
+    <img class="side-logo" src="assets/brand/jocotoco_logo_green.svg" alt="Fundación Jocotoco">
+    <div class="side-brand-word">FUNDACIÓN<br><strong>JOCOTOCO</strong><br><span style="font-size:9px;color:#9eaa94">MESSENGER</span></div>
+    <button class="icon-button side-close" id="sidebar-close" aria-label="Cerrar menú" title="Cerrar menú">×</button>
+  </div>
+  <div class="side-caption" data-i18n="navLabel">CONTENIDO</div>
+  <nav class="toc" aria-label="Secciones">
+    <a class="toc-link active" href="#inicio"><span>◉</span><span class="toc-text" data-i18n="nav0">Inicio</span><span class="toc-number">01</span></a>
+    <a class="toc-link" href="#logro"><span>◈</span><span class="toc-text" data-i18n="nav1">El logro</span><span class="toc-number">02</span></a>
+    <a class="toc-link" href="#conexion"><span>↔</span><span class="toc-text" data-i18n="nav2">Cómo funciona</span><span class="toc-number">03</span></a>
+    <a class="toc-link" href="#mensajes"><span>▤</span><span class="toc-text" data-i18n="nav3">Mensajes y audio</span><span class="toc-number">04</span></a>
+    <a class="toc-link" href="#mapa"><span>⌖</span><span class="toc-text" data-i18n="nav4">Mapa del ensayo</span><span class="toc-number">05</span></a>
+    <a class="toc-link" href="#siguiente"><span>✳</span><span class="toc-text" data-i18n="nav5">Qué sigue</span><span class="toc-number">06</span></a>
+  </nav>
+  <div class="side-footer"><span class="demo-dot"></span><span class="side-text" data-i18n="navFoot">Dos ensayos urbanos · noviembre de 2026</span></div>
+  <button class="icon-button side-small" id="collapse-sidebar" aria-label="Contraer barra lateral" title="Contraer barra lateral">≡</button>
+</aside>
+<div class="sidebar-shade" id="shade"></div>
+<div class="workspace">
+<header class="topbar">
+  <div class="top-left">
+    <button class="icon-button mobile-menu" id="mobile-menu" aria-label="Abrir menú">☰</button>
+    <div class="header-brand"><img src="assets/brand/jocotoco_logo_main.svg" alt="Fundación Jocotoco"><div class="header-divider"></div><span class="header-strap">CIENCIA · IA ·<br>TECNOLOGÍA APLICADA</span></div>
+  </div>
+  <div class="top-right"><span class="top-internal" data-i18n="topLabel">RESULTADO DE INNOVACIÓN APLICADA</span><div class="lang-picker" role="group" aria-label="Idioma / Language"><button data-lang="es" class="active" aria-pressed="true">ES</button><button data-lang="en" aria-pressed="false">EN</button></div></div>
+</header>
+<main class="main">
+  <section id="inicio" class="hero messenger-hero">
+    <div class="hero-overline"><span class="hero-line"></span><span data-i18n="overline">DOS ENSAYOS URBANOS · PROTOTIPO FUNCIONAL</span></div>
+    <h1 data-i18n="title">Jocotoco Messenger</h1>
+    <p class="hero-sub" data-i18n="subtitle">Audio y coordenadas por radio, sin cobertura celular entre nodos.</p>
+    <div class="hero-credit"><strong>Pedro Galindo</strong><span class="dot"></span><span data-i18n="authorRole">Coordinador de Ciencia, IA y Tecnología Aplicada</span><span class="dot"></span><span>Fundación Jocotoco</span></div>
+    <div class="hero-caption"><span data-i18n="heroTag">Dos ensayos urbanos · noviembre de 2026</span><span data-i18n="heroRight">Dos dispositivos Heltec V4 · Enlace LoRa</span></div>
+  </section>
+  <figure class="hero-visual"><img src="assets/images/portada_ensayo_urbano.png" width="1672" height="941" alt="Representación generativa del prototipo real: celular conectado por Wi-Fi local a JO02, enlace LoRa a JO01 y computadora receptora. Heltec V4 con componentes visibles, prueba en entorno urbano."></figure>
+  <div class="content main-content">
+    <div class="context-banner"><div><strong data-i18n="contextTitle">Dos ensayos urbanos, todavía no una red de bosque</strong><p data-i18n="contextText">En dos ensayos urbanos demostramos el envío de información entre dos dispositivos sin depender de internet ni cobertura celular para el enlace de radio.</p></div><span class="context-badge" data-i18n="contextBadge">Etapa: prototipo validado en entorno urbano</span></div>
+    <section id="logro" class="chapter" style="padding-top:0">
+      <div class="section-head"><div><div class="eyebrow">01 · RESULTADOS</div><h2 data-i18n="section1">Lo que demostramos</h2><p data-i18n="sec1sub">Dos recorridos urbanos cotejados mediante evidencia recuperada de JO01 y JO02.</p></div></div>
+      <div class="metrics-row">
+        <div class="metric-card"><span class="metric-value">17/17</span><strong data-i18n="metric1">Audios coincidentes</strong><small data-i18n="metric1sub">17 grabaciones con contenido Codec2 idéntico en ambos extremos</small></div>
+        <div class="metric-card"><span class="metric-value">9</span><strong data-i18n="metric2">Ubicaciones enviadas</strong><small data-i18n="metric2sub">Coordenadas geográficas reales enviadas como mensajes</small></div>
+        <div class="metric-card"><span class="metric-value">7</span><strong data-i18n="metric3">En los dos historiales</strong><small data-i18n="metric3sub">Siete mensajes de ubicación conservados en ambos nodos</small></div>
+        <div class="metric-card"><span class="metric-value symbol">2</span><strong data-i18n="metric4">Ensayos urbanos</strong><small data-i18n="metric4sub">Una misma tecnología probada en dos recorridos</small></div>
+      </div>
+      <p class="key-sentence" data-i18n="message">Un pequeño prototipo ya consigue transportar algo valioso: una voz y una ubicación a través de un enlace de radio local.</p>
+    </section>
+    <section id="conexion" class="chapter">
+      <div class="section-head"><div><div class="eyebrow">02 · CONEXIÓN</div><h2 data-i18n="section2">Una conexión sencilla</h2><p data-i18n="sec2sub">Del teléfono a la radio, y de la radio a una computadora. El internet no participa en el tramo LoRa.</p></div></div>
+      <div class="link-strip" aria-label="Celular a JO02 por Wi-Fi; JO02 a JO01 por LoRa; JO01 a PC por Wi-Fi">
+        <div class="link-node"><span class="node-glyph">▣</span><strong data-i18n="phone">Celular</strong><small data-i18n="phoneSub">Interfaz Jocotoco</small></div>
+        <div class="link-arrow">→</div>
+        <div class="link-node"><span class="node-glyph">◉</span><strong>JO02</strong><small data-i18n="jo02Sub">Nodo emisor</small></div>
+        <div class="link-arrow radio">⇢</div>
+        <div class="link-node"><span class="node-glyph">◉</span><strong>JO01</strong><small data-i18n="jo01Sub">Nodo receptor</small></div>
+        <div class="link-arrow">→</div>
+        <div class="link-node"><span class="node-glyph">▤</span><strong data-i18n="pc">Computadora</strong><small data-i18n="pcSub">Escucha y consulta</small></div>
+      </div>
+      <div class="link-explainer"><span><strong>Wi-Fi</strong> · <span data-i18n="wifi">Wi-Fi local en cada extremo</span></span><span><strong>915 MHz</strong> · <span data-i18n="radio">LoRa · 915 MHz · entre nodos</span></span></div>
+    </section>
+    <section id="mensajes" class="chapter">
+      <div class="section-head"><div><div class="eyebrow">03 · EVIDENCIA REAL</div><h2 data-i18n="section3">La conversación, vista desde ambos nodos</h2><p data-i18n="sec3sub">La interfaz original de Jocotoco Messenger, reconstruida con las coordenadas y los audios efectivamente recuperados.</p></div></div>
+      <div class="ux-toolbar">
+         <div class="ux-trial-select" role="group" aria-label="Seleccionar ensayo"><button type="button" data-trial="1" data-i18n="trialOne">Ensayo 1 · primer recorrido</button><button type="button" data-trial="2" data-i18n="trialTwo">Ensayo 2 · mediodía</button><button type="button" class="active" data-trial="all" data-i18n="mapBoth">Ambos</button></div>
+         <div class="ux-view-select" role="group" aria-label="Ver nodo"><button type="button" data-mobile-node="JO01" class="active">JO01</button><button type="button" data-mobile-node="JO02">JO02</button></div>
+      </div>
+      <div class="ux-v3-pair">
+        <article class="ux-v3-device" data-node="JO01" aria-label="Interfaz recuperada del receptor JO01">
+          <div class="ux-v3-apphead">
+            <div class="ux-v3-topline"><span class="ux-v3-avatar" aria-hidden="true">⌁</span><div class="ux-v3-contact"><strong>JO02</strong><span data-i18n="uxHistory">Historial recuperado · consulta</span></div><span class="ux-v3-dots" aria-hidden="true">⋮</span></div>
+            <div class="ux-v3-metrics"><span>◉ &nbsp; <b>JO01</b></span><span data-i18n="uxReceiver">Nodo receptor</span><span class="ux-v3-readonly" data-i18n="uxArchived">ARCHIVO</span></div>
+          </div>
+          <div class="ux-v3-chat" id="chat-left" role="log" aria-label="Mensajes y audios conservados en JO01"></div>
+          <div class="ux-v3-composer"><span class="ux-v3-input" data-i18n="uxReadonly">Mensajes históricos · solo lectura</span><span class="ux-v3-mic">◉</span></div>
+        </article>
+        <div class="ux-v3-bridge" aria-hidden="true"><b>LoRa</b><span>↔</span><small>915 MHz</small></div>
+        <article class="ux-v3-device" data-node="JO02" aria-label="Interfaz recuperada del emisor JO02">
+          <div class="ux-v3-apphead">
+            <div class="ux-v3-topline"><span class="ux-v3-avatar" aria-hidden="true">⌁</span><div class="ux-v3-contact"><strong>JO01</strong><span data-i18n="uxHistory">Historial recuperado · consulta</span></div><span class="ux-v3-dots" aria-hidden="true">⋮</span></div>
+            <div class="ux-v3-metrics"><span>◉ &nbsp; <b>JO02</b></span><span data-i18n="uxSender">Nodo emisor</span><span class="ux-v3-readonly" data-i18n="uxArchived">ARCHIVO</span></div>
+          </div>
+          <div class="ux-v3-chat" id="chat-right" role="log" aria-label="Mensajes y audios conservados en JO02"></div>
+          <div class="ux-v3-composer"><span class="ux-v3-input" data-i18n="uxReadonly">Mensajes históricos · solo lectura</span><span class="ux-v3-mic">◉</span></div>
+        </article>
+      </div>
+      <div class="ux-under"><div class="ux-under-stats"><strong id="ux-trial-summary">—</strong><span id="ux-trial-reception">—</span><span id="ux-trial-clips">—</span></div><p data-i18n="uxNotice">Los audios corresponden a la misma sesión del ensayo según el registro de JO02; las horas se recuperaron de los registros (relojes no sincronizados) y no existe una asociación individual demostrada entre cada voz y cada coordenada. Reproducción real, sin sonidos sintetizados ni transmisión en vivo.</p></div>
+    </section>
+
+    <section id="mapa" class="chapter">
+      <div class="section-head"><div><div class="eyebrow">04 · GEOGRAFÍA</div><h2 data-i18n="section4">Dos ensayos en un solo mapa</h2><p data-i18n="sec4sub">Ubicaciones transmitidas por texto y anillos de distancia desde cada receptor. No son curvas de señal ni zonas de cobertura.</p></div></div>
+      <div class="map-trial-summary">
+        <div class="map-receiver-card"><span class="map-bullet blue">⌖</span><div><strong data-i18n="mapTrial1">Ensayo 1 · primer recorrido</strong><small>JO01: −0.2050142744, −78.4813947664</small></div><b>141 m <small data-i18n="verified">documentados</small></b></div>
+        <div class="map-receiver-card"><span class="map-bullet green">⌖</span><div><strong data-i18n="mapTrial2">Ensayo 2 · mediodía</strong><small>JO01: −0.1747106999, −78.4851626798</small></div><b>186 m <small data-i18n="verified">documentados</small></b></div>
+      </div>
+      <div class="map-shell">
+        <div class="map-top"><strong data-i18n="mapTitle">Mapa interactivo Folium · ESRI, OpenStreetMap y radios en metros</strong><a class="map-open" id="map-open" href="mapas/folium_es.html" target="_blank" rel="noopener" data-i18n="mapOpen">Abrir mapa completo ↗</a></div>
+        <div class="map-focus-toolbar" role="group" aria-label="Seleccionar ensayo del mapa">
+          <button type="button" data-map-focus="1" data-i18n="trialOne">Ensayo 1 · primer recorrido</button>
+          <button type="button" data-map-focus="2" data-i18n="trialTwo">Ensayo 2 · mediodía</button>
+          <button type="button" class="active" data-map-focus="all" data-i18n="mapBoth">Ambos ensayos</button>
+        </div>
+        <iframe id="folium" src="mapas/folium_es.html" title="Mapa Folium de los dos ensayos y sus radios" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="map-note" data-i18n="mapNote">Verde: coordenada presente en ambos dispositivos. Ocre: solo en JO02. Los anillos coloreados representan distancias geodésicas desde JO01, no calidad de señal ni cobertura. Las imágenes base ESRI y OSM requieren internet.</div>
+      </div>
+      <div class="map-distance-table">
+       <div class="map-distance-head"><b data-i18n="distancesTitle">Distancias desde cada receptor</b><span data-i18n="distancesNote">Cálculo geodésico WGS84 · fuente: mensajes reales</span></div>
+       <div id="distance-grid" class="map-distance-grid"></div>
+      </div>
+    </section>
+    <section id="siguiente" class="chapter">
+      <div class="section-head"><div><div class="eyebrow">05 · PROYECCIÓN</div><h2 data-i18n="section5">De la idea a una capacidad real</h2><p data-i18n="sec5sub">El valor del prototipo está en integrar componentes, desarrollar el software y verificar el resultado en ambos extremos.</p></div></div>
+      <div class="lesson-grid"><article class="lesson-card"><span>01 / HARDWARE</span><h3 data-i18n="lesson1">Integración propia</h3><p data-i18n="lesson1Text">Dos Heltec V4, micrófono digital, conexión local con teléfono y PC, e interfaz de mensajería Jocotoco.</p></article><article class="lesson-card"><span>02 / SOFTWARE</span><h3 data-i18n="lesson2">Audio por radio</h3><p data-i18n="lesson2Text">Compresión de voz, división en paquetes, transmisión LoRa y reconstrucción de archivos escuchables en el receptor.</p></article><article class="lesson-card"><span>03 / VALIDACIÓN</span><h3 data-i18n="lesson3">Evidencia comprobable</h3><p data-i18n="lesson3Text">Extracción independiente desde ambos nodos, cotejo de 17 grabaciones y recuperación de los mensajes espaciales.</p></article></div>
+      <div class="next-step"><div><strong data-i18n="nextTitle">El siguiente paso es probarlo en condiciones de conservación</strong><p data-i18n="nextText">Evaluar alcance, consumo de energía, estabilidad, retransmisión y utilidad operativa en un entorno de bosque. Este ensayo urbano no demuestra todavía cobertura forestal.</p></div><span class="next-pill" data-i18n="nextPill">Siguiente fase · evaluación en terreno</span></div>
+      <p class="provenance" data-i18n="provenance">Nota de lectura: los 17 audios se cotejaron mediante la huella SHA-256 del contenido Codec2. Dos ubicaciones no aparecen en el historial conservado de JO01; esto no demuestra que nunca fueran recibidas. Los acuses y la recepción tampoco deben confundirse.</p>
+    </section>
+    <footer class="footer"><img src="assets/brand/jocotoco_logo_main.svg" alt="Fundación Jocotoco"><div><strong data-i18n="footerTitle">Jocotoco Messenger · demostración de tecnología aplicada</strong><span data-i18n="footerSub">Pedro Galindo · Fundación Jocotoco · noviembre de 2026</span></div><a href="#inicio" data-i18n="back">Volver arriba</a></footer>
+  </div>
+</main>
+</div>
+</div>
+<script src="data/evidencias.js"></script>
+<script src="assets/js/app_v11.js"></script>
+</body>
+</html>

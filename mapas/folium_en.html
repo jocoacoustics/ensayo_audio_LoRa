@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <style>
+.geo-pin{width:29px;height:29px;position:relative;background:var(--pin);border:3px solid white;border-radius:52% 52% 52% 0;transform:rotate(-45deg);box-shadow:0 3px 11px rgba(5,38,31,.46);display:grid;place-items:center;transition:filter .12s ease}
+.geo-pin span{transform:rotate(45deg);font:800 12px Inter,Arial,sans-serif;color:#fff;text-shadow:0 1px 3px #0003;line-height:1}
+.geo-pin:hover{filter:brightness(1.2)}
+.geo-pin.only{--pin:#B57C33}
+.ring-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:8px;background:var(--chip);color:#fff;border:1px solid var(--line);box-shadow:0 2px 12px #0004;white-space:nowrap;font:800 11px Inter,Arial,sans-serif;text-shadow:0 1px 1px #0003}
+.ring-chip:before{content:"";width:6px;height:6px;background:var(--line);border:1px solid #fff;border-radius:50%;display:block;flex:none}
+.receiver-pin{display:flex;align-items:center;flex-direction:column;gap:2px;white-space:nowrap;filter:drop-shadow(0 3px 5px #0004)}
+.receiver-pin .rx-icon{background:#015486;color:#fff;border:3px solid #fff;border-radius:50%;width:34px;height:34px;display:grid;place-items:center;font:850 12px Inter,Arial,sans-serif}
+.receiver-pin b{background:#fff;border-radius:4px;color:#174a59;padding:3px 5px;border:1px solid #bed5df;font:800 10px Inter,Arial,sans-serif}
+.geo-popup{font:12px/1.55 Inter,Arial,sans-serif;color:#23423a;max-width:245px;display:flex;flex-direction:column;gap:5px}.geo-popup strong{font-size:15px}.geo-popup small{color:#63786c;font-size:11px}.geo-popup code{font:10px/1.5 monospace;background:#f0f5f0;padding:4px 6px;border-radius:6px;white-space:nowrap}.geo-popup em{font-style:normal;font-weight:700;color:var(--status);font-size:11px}
+.leaflet-control-layers{border-radius:9px!important;box-shadow:0 2px 16px #0002!important;max-width:205px;font:11px Inter,Arial,sans-serif}.leaflet-control-layers-list{max-height:220px;overflow-y:auto}
+.geo-legend{position:absolute;z-index:700;bottom:13px;left:12px;border-radius:10px;background:#fffdf9ef;padding:9px 10px;box-shadow:0 3px 15px #0002;font:11px/1.45 Inter,Arial,sans-serif;color:#234739;max-width:260px;pointer-events:none}
+.geo-legend strong{display:block;margin-bottom:4px}.geo-legend .lg-item{display:inline-flex;align-items:center;gap:5px;margin-right:9px}.geo-legend .lg-pin{background:var(--color);height:10px;width:10px;border-radius:50%}.geo-legend .lg-small{display:block;font-size:9px;margin-top:3px;color:#627365}
+.geo-toolbar{position:absolute;top:10px;left:10px;z-index:800;background:#ffffffed;border-radius:10px;padding:5px;display:flex;gap:4px;box-shadow:0 3px 12px #0003}.geo-toolbar button{background:#fff;border:1px solid #dbe5db;color:#315642;padding:8px 9px;border-radius:7px;font:800 10px Inter,Arial;cursor:pointer}.geo-toolbar button.active,.geo-toolbar button:hover{background:#2b5f4b;color:#fff}
+@media(max-width:550px){.geo-legend{bottom:8px;left:8px;font-size:10px;max-width:205px}.geo-legend .lg-small{font-size:8px}.geo-toolbar{left:7px;top:7px}.geo-toolbar button{padding:7px;font-size:9px}.leaflet-control-layers{max-width:155px}}
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_4986a8bc0f461377276965eb795ad5e5 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_4986a8bc0f461377276965eb795ad5e5" ></div>
+        
+
+<script>
+(function(){
+ const map=map_4986a8bc0f461377276965eb795ad5e5;
+ const groups={1:feature_group_61885a1e79b7f617899d40ef56c7d4a6,2:feature_group_a39a063843f3bfbd52d180380456259b};
+ let current='all';
+ function focus(value){
+   let which=['1','2','all'].includes(String(value))?String(value):'all';
+   current=which;
+   for(const n of ['1','2']){ if(which==='all'||which===n){ if(!map.hasLayer(groups[n]))map.addLayer(groups[n]); } else if(map.hasLayer(groups[n]))map.removeLayer(groups[n]); }
+   // Compute bounds from the actual Folium geometries and points, never from the default initial view.
+   let bounds=which==='all'?groups[1].getBounds().extend(groups[2].getBounds()):groups[which].getBounds();
+   map.invalidateSize({pan:false});
+   map.fitBounds(bounds,{padding:[30,32],maxZoom:17,animate:false});
+   document.querySelectorAll('[data-geo-focus]').forEach(b=>b.classList.toggle('active',b.dataset.geoFocus===which));
+ }
+ const legend=document.createElement('div');legend.className='geo-legend';
+ legend.innerHTML='<strong>Trial 1 + Trial 2</strong><span class="lg-item"><i class="lg-pin" style="--color:#28784f"></i>On both nodes</span><span class="lg-item"><i class="lg-pin" style="--color:#ae7838"></i>JO02 only</span><small class="lg-small">Geographic distance, not signal or coverage</small>';
+ map.getContainer().append(legend);
+ if(window.self===window.top){
+   const bar=document.createElement('div');bar.className='geo-toolbar';
+   for(const [id,label] of [['1','Trial 1'],['2','Trial 2'],['all','Both']]){
+     const b=document.createElement('button');b.type='button';b.dataset.geoFocus=id;b.textContent=label;b.addEventListener('click',()=>focus(id));bar.append(b);
+   }
+   map.getContainer().append(bar);
+ }
+ window.addEventListener('message',function(e){if(e.data && e.data.type==='joco-focus')focus(e.data.trial);});
+ map.whenReady(function(){
+   setTimeout(()=>{focus('all');if(window.parent!==window)window.parent.postMessage({type:'joco-map-ready'},'*');},120);
+ });
+ window.jocoMapTest={focus:focus,getCurrent:()=>current,getVisible:()=>[1,2].filter(n=>map.hasLayer(groups[n])),getPinCount:()=>Object.values(groups).reduce((s,g)=>{let n=0;g.eachLayer(x=>{if(x instanceof L.Marker && x.getElement()?.querySelector('.geo-pin'))n++});return s+n},0)};
+})();
+</script>
+</body>
+<script>
+    
+    
+            var map_4986a8bc0f461377276965eb795ad5e5 = L.map(
+                "map_4986a8bc0f461377276965eb795ad5e5",
+                {
+                    center: [-0.188, -78.484],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+  "scrollWheelZoom": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_4986a8bc0f461377276965eb795ad5e5);
+
+            
+
+        
+    
+            var tile_layer_d1e44d883b0dc3dc88c4aa5ec2ae0d65 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u00a9 Esri, Maxar, Earthstar Geographics and the GIS User Community",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_d1e44d883b0dc3dc88c4aa5ec2ae0d65.addTo(map_4986a8bc0f461377276965eb795ad5e5);
+        
+    
+            var tile_layer_5708ec5ec1dfc826472231fd0dccb631 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u00a9 Esri, HERE, Garmin, USGS, OpenStreetMap contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var tile_layer_63fe4a118f6152cf17137d5ad0e5151c = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u00a9 OpenStreetMap contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var tile_layer_2b89c78ae816d81617d7522d6cb8f9a0 = L.tileLayer(
+                "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u00a9 OpenStreetMap contributors \u00a9 CARTO",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var feature_group_61885a1e79b7f617899d40ef56c7d4a6 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_756649579933b1acceb58e053e115512 = L.circle(
+                [-0.20501427442791853, -78.48139476637581],
+                {"bubblingMouseEvents": true, "color": "#D9A34D", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D9A34D", "fillOpacity": 0.055, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 200, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            circle_756649579933b1acceb58e053e115512.bindTooltip(
+                `<div>
+                     Trial 1 · 200 m · Geographic distance, not signal or coverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_b2bea0d7a1a8670d177d362f7dc7db9e = L.circle(
+                [-0.20501427442791853, -78.48139476637581],
+                {"bubblingMouseEvents": true, "color": "#C1C05F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#C1C05F", "fillOpacity": 0.055, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 150, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            circle_b2bea0d7a1a8670d177d362f7dc7db9e.bindTooltip(
+                `<div>
+                     Trial 1 · 150 m · Geographic distance, not signal or coverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_33cef234943c98d4e70cf7e8df367bd6 = L.circle(
+                [-0.20501427442791853, -78.48139476637581],
+                {"bubblingMouseEvents": true, "color": "#73B99F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#73B99F", "fillOpacity": 0.055, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 100, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            circle_33cef234943c98d4e70cf7e8df367bd6.bindTooltip(
+                `<div>
+                     Trial 1 · 100 m · Geographic distance, not signal or coverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_06d10bde34666497e3a663cff7e4358d = L.circle(
+                [-0.20501427442791853, -78.48139476637581],
+                {"bubblingMouseEvents": true, "color": "#58A7C8", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#58A7C8", "fillOpacity": 0.055, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 50, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            circle_06d10bde34666497e3a663cff7e4358d.bindTooltip(
+                `<div>
+                     Trial 1 · 50 m · Geographic distance, not signal or coverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6d587ecb4ae830bedbd2c67e6884970d = L.marker(
+                [-0.2035889688252206, -78.48028864321351],
+                {
+}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            var div_icon_8cd310619548eaaf13c5b955dc7bcc63 = L.divIcon({
+  "html": "\u003cspan class=\"ring-chip\" style=\"--chip:#784C1F;--line:#D9A34D\"\u003e200 m\u003c/span\u003e",
+  "iconSize": [72, 24],
+  "iconAnchor": [36, 12],
+  "className": "empty",
+});
+        
+    
+            marker_6d587ecb4ae830bedbd2c67e6884970d.bindTooltip(
+                `<div>
+                     Trial 1 · 200 m
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6d587ecb4ae830bedbd2c67e6884970d.setIcon(div_icon_8cd310619548eaaf13c5b955dc7bcc63);
+            
+    
+            var marker_8fd5de737d43cc6fd13fe61eb578b127 = L.marker(
+                [-0.20394529523331534, -78.48056517398582],
+                {
+}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            var div_icon_71f36368b7ef26071c78d28715935b92 = L.divIcon({
+  "html": "\u003cspan class=\"ring-chip\" style=\"--chip:#555F20;--line:#C1C05F\"\u003e150 m\u003c/span\u003e",
+  "iconSize": [72, 24],
+  "iconAnchor": [36, 12],
+  "className": "empty",
+});
+        
+    
+            marker_8fd5de737d43cc6fd13fe61eb578b127.bindTooltip(
+                `<div>
+                     Trial 1 · 150 m
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8fd5de737d43cc6fd13fe61eb578b127.setIcon(div_icon_71f36368b7ef26071c78d28715935b92);
+            
+    
+            var marker_0d751364b784f8b8f34f832e9a28631f = L.marker(
+                [-0.20430162163646898, -78.4808417047703],
+                {
+}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            var div_icon_0a9293d80aac0382073a8609f0675911 = L.divIcon({
+  "html": "\u003cspan class=\"ring-chip\" style=\"--chip:#1E634B;--line:#73B99F\"\u003e100 m\u003c/span\u003e",
+  "iconSize": [72, 24],
+  "iconAnchor": [36, 12],
+  "className": "empty",
+});
+        
+    
+            marker_0d751364b784f8b8f34f832e9a28631f.bindTooltip(
+                `<div>
+                     Trial 1 · 100 m
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0d751364b784f8b8f34f832e9a28631f.setIcon(div_icon_0a9293d80aac0382073a8609f0675911);
+            
+    
+            var marker_d4f1f8ef92c271b70b17e01f74e48768 = L.marker(
+                [-0.2046579480346729, -78.48111823556695],
+                {
+}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            var div_icon_9db1bf44df72bc52e2512c80ea5a8df9 = L.divIcon({
+  "html": "\u003cspan class=\"ring-chip\" style=\"--chip:#145873;--line:#58A7C8\"\u003e50 m\u003c/span\u003e",
+  "iconSize": [72, 24],
+  "iconAnchor": [36, 12],
+  "className": "empty",
+});
+        
+    
+            marker_d4f1f8ef92c271b70b17e01f74e48768.bindTooltip(
+                `<div>
+                     Trial 1 · 50 m
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d4f1f8ef92c271b70b17e01f74e48768.setIcon(div_icon_9db1bf44df72bc52e2512c80ea5a8df9);
+            
+    
+            var marker_7614ae1da2f5976ea2265bae92388ca5 = L.marker(
+                [-0.20501427442791853, -78.48139476637581],
+                {
+}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            var div_icon_ff7dbb3ccd9643ec8200f076688744d3 = L.divIcon({
+  "html": "\u003cdiv class=\"receiver-pin\"\u003e\u003cspan class=\"rx-icon\"\u003eRX\u003c/span\u003e\u003cb\u003eJO01\u003c/b\u003e\u003c/div\u003e",
+  "iconSize": [44, 53],
+  "iconAnchor": [22, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_8462f221d12db0c532ac0263d33c097f = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_4932683819cd5f610185fc97c4d33dcc = $(`<div id="html_4932683819cd5f610185fc97c4d33dcc" style="width: 100.0%; height: 100.0%;"><div class="geo-popup"><strong>JO01 · Fixed receiver</strong><small>Trial 1</small><code>-0.2050142744, -78.4813947664</code></div></div>`)[0];
+                popup_8462f221d12db0c532ac0263d33c097f.setContent(html_4932683819cd5f610185fc97c4d33dcc);
+            
+        
+
+        marker_7614ae1da2f5976ea2265bae92388ca5.bindPopup(popup_8462f221d12db0c532ac0263d33c097f)
+        ;
+
+        
+    
+    
+            marker_7614ae1da2f5976ea2265bae92388ca5.bindTooltip(
+                `<div>
+                     JO01 · Trial 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7614ae1da2f5976ea2265bae92388ca5.setIcon(div_icon_ff7dbb3ccd9643ec8200f076688744d3);
+            
+    
+            var marker_d35e1e2d053fa9e16441a350ed628ed1 = L.marker(
+                [-0.2051554, -78.4812567],
+                {
+  "riseOnHover": true,
+}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            var div_icon_6bd3ab805bb2ca2312b3a9458b421a11 = L.divIcon({
+  "html": "\u003cdiv class=\"geo-pin\" style=\"--pin:#28784f\"\u003e\u003cspan\u003e1\u003c/span\u003e\u003c/div\u003e",
+  "iconSize": [40, 42],
+  "iconAnchor": [20, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_8f665ab6452e3c071bb1ff5dd0c3a0a2 = L.popup({
+  "maxWidth": 330,
+});
+
+        
+            
+                var html_0f0d400f30a09c9622e15d2f1f0a5b1e = $(`<div id="html_0f0d400f30a09c9622e15d2f1f0a5b1e" style="width: 100.0%; height: 100.0%;"><div class="geo-popup" style="--status:#28784f"><strong>Point 1 · Trial 1</strong><small>21.9 m from receiver</small><code>-0.2051554, -78.4812567</code><small>Time: 23/11/2026 01:10</small><em>Found on JO01 and JO02</em><small>Time from JO02 log · clock not synchronized</small></div></div>`)[0];
+                popup_8f665ab6452e3c071bb1ff5dd0c3a0a2.setContent(html_0f0d400f30a09c9622e15d2f1f0a5b1e);
+            
+        
+
+        marker_d35e1e2d053fa9e16441a350ed628ed1.bindPopup(popup_8f665ab6452e3c071bb1ff5dd0c3a0a2)
+        ;
+
+        
+    
+    
+            marker_d35e1e2d053fa9e16441a350ed628ed1.bindTooltip(
+                `<div>
+                     Point 1 · 21.9 m · Found on JO01 and JO02
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d35e1e2d053fa9e16441a350ed628ed1.setIcon(div_icon_6bd3ab805bb2ca2312b3a9458b421a11);
+            
+    
+            var marker_065fa3db63840c4c6f89f7a756a28986 = L.marker(
+                [-0.2047896, -78.481009],
+                {
+  "riseOnHover": true,
+}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            var div_icon_be5ea18629204748103c218eb14e1f06 = L.divIcon({
+  "html": "\u003cdiv class=\"geo-pin\" style=\"--pin:#28784f\"\u003e\u003cspan\u003e2\u003c/span\u003e\u003c/div\u003e",
+  "iconSize": [40, 42],
+  "iconAnchor": [20, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_3e75f66cbf4a65bb9480ba1fa23dcd25 = L.popup({
+  "maxWidth": 330,
+});
+
+        
+            
+                var html_ea9155f172d211740b62beb75a85b60f = $(`<div id="html_ea9155f172d211740b62beb75a85b60f" style="width: 100.0%; height: 100.0%;"><div class="geo-popup" style="--status:#28784f"><strong>Point 2 · Trial 1</strong><small>49.6 m from receiver</small><code>-0.2047896, -78.4810090</code><small>Time: 23/11/2026 01:12</small><em>Found on JO01 and JO02</em><small>Time from JO02 log · clock not synchronized</small></div></div>`)[0];
+                popup_3e75f66cbf4a65bb9480ba1fa23dcd25.setContent(html_ea9155f172d211740b62beb75a85b60f);
+            
+        
+
+        marker_065fa3db63840c4c6f89f7a756a28986.bindPopup(popup_3e75f66cbf4a65bb9480ba1fa23dcd25)
+        ;
+
+        
+    
+    
+            marker_065fa3db63840c4c6f89f7a756a28986.bindTooltip(
+                `<div>
+                     Point 2 · 49.6 m · Found on JO01 and JO02
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_065fa3db63840c4c6f89f7a756a28986.setIcon(div_icon_be5ea18629204748103c218eb14e1f06);
+            
+    
+            var marker_cadd5d5dcf5b748bdfce786895ffe6fc = L.marker(
+                [-0.2057629, -78.4821248],
+                {
+  "riseOnHover": true,
+}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            var div_icon_c0cd5e544bf97dd1a407794e2ca9f10b = L.divIcon({
+  "html": "\u003cdiv class=\"geo-pin\" style=\"--pin:#28784f\"\u003e\u003cspan\u003e3\u003c/span\u003e\u003c/div\u003e",
+  "iconSize": [40, 42],
+  "iconAnchor": [20, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_6f3d601757790b52658fa29602362ca6 = L.popup({
+  "maxWidth": 330,
+});
+
+        
+            
+                var html_c7ce9a19d3028e07473d3a67df190a63 = $(`<div id="html_c7ce9a19d3028e07473d3a67df190a63" style="width: 100.0%; height: 100.0%;"><div class="geo-popup" style="--status:#28784f"><strong>Point 3 · Trial 1</strong><small>116.0 m from receiver</small><code>-0.2057629, -78.4821248</code><small>Time: 23/11/2026 01:17</small><em>Found on JO01 and JO02</em><small>Time from JO02 log · clock not synchronized</small></div></div>`)[0];
+                popup_6f3d601757790b52658fa29602362ca6.setContent(html_c7ce9a19d3028e07473d3a67df190a63);
+            
+        
+
+        marker_cadd5d5dcf5b748bdfce786895ffe6fc.bindPopup(popup_6f3d601757790b52658fa29602362ca6)
+        ;
+
+        
+    
+    
+            marker_cadd5d5dcf5b748bdfce786895ffe6fc.bindTooltip(
+                `<div>
+                     Point 3 · 116.0 m · Found on JO01 and JO02
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cadd5d5dcf5b748bdfce786895ffe6fc.setIcon(div_icon_c0cd5e544bf97dd1a407794e2ca9f10b);
+            
+    
+            var marker_a36e44ffcd1dfc57dd491ba2c5e7b9ee = L.marker(
+                [-0.2048355, -78.4826478],
+                {
+  "riseOnHover": true,
+}
+            ).addTo(feature_group_61885a1e79b7f617899d40ef56c7d4a6);
+        
+    
+            var div_icon_c968702882aa7dbbcf20254e64642e6c = L.divIcon({
+  "html": "\u003cdiv class=\"geo-pin\" style=\"--pin:#28784f\"\u003e\u003cspan\u003e4\u003c/span\u003e\u003c/div\u003e",
+  "iconSize": [40, 42],
+  "iconAnchor": [20, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_0caca2c47a475bccdaaed1a06210cd21 = L.popup({
+  "maxWidth": 330,
+});
+
+        
+            
+                var html_a87e1ca39415889c72b495196c6b3f74 = $(`<div id="html_a87e1ca39415889c72b495196c6b3f74" style="width: 100.0%; height: 100.0%;"><div class="geo-popup" style="--status:#28784f"><strong>Point 4 · Trial 1</strong><small>140.9 m from receiver</small><code>-0.2048355, -78.4826478</code><small>Time: 23/11/2026 01:20</small><em>Found on JO01 and JO02</em><small>Time from JO02 log · clock not synchronized</small></div></div>`)[0];
+                popup_0caca2c47a475bccdaaed1a06210cd21.setContent(html_a87e1ca39415889c72b495196c6b3f74);
+            
+        
+
+        marker_a36e44ffcd1dfc57dd491ba2c5e7b9ee.bindPopup(popup_0caca2c47a475bccdaaed1a06210cd21)
+        ;
+
+        
+    
+    
+            marker_a36e44ffcd1dfc57dd491ba2c5e7b9ee.bindTooltip(
+                `<div>
+                     Point 4 · 140.9 m · Found on JO01 and JO02
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a36e44ffcd1dfc57dd491ba2c5e7b9ee.setIcon(div_icon_c968702882aa7dbbcf20254e64642e6c);
+            
+    
+            feature_group_61885a1e79b7f617899d40ef56c7d4a6.addTo(map_4986a8bc0f461377276965eb795ad5e5);
+        
+    
+            var feature_group_a39a063843f3bfbd52d180380456259b = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_212b4f263c82412bcebb945472a6fc75 = L.circle(
+                [-0.17471069990614604, -78.48516267975725],
+                {"bubblingMouseEvents": true, "color": "#A97073", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#A97073", "fillOpacity": 0.055, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 550, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            circle_212b4f263c82412bcebb945472a6fc75.bindTooltip(
+                `<div>
+                     Trial 2 · 550 m · Geographic distance, not signal or coverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_661a88ff91ac5b9833cfa353d8e6e49a = L.circle(
+                [-0.17471069990614604, -78.48516267975725],
+                {"bubblingMouseEvents": true, "color": "#C97F51", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#C97F51", "fillOpacity": 0.055, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 350, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            circle_661a88ff91ac5b9833cfa353d8e6e49a.bindTooltip(
+                `<div>
+                     Trial 2 · 350 m · Geographic distance, not signal or coverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_76f1f15c5234efc0c8adf4e9e5e107ab = L.circle(
+                [-0.17471069990614604, -78.48516267975725],
+                {"bubblingMouseEvents": true, "color": "#D9A34D", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#D9A34D", "fillOpacity": 0.055, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 200, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            circle_76f1f15c5234efc0c8adf4e9e5e107ab.bindTooltip(
+                `<div>
+                     Trial 2 · 200 m · Geographic distance, not signal or coverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_0e650ccd75b218c7530616c7a7450c50 = L.circle(
+                [-0.17471069990614604, -78.48516267975725],
+                {"bubblingMouseEvents": true, "color": "#C1C05F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#C1C05F", "fillOpacity": 0.055, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 150, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            circle_0e650ccd75b218c7530616c7a7450c50.bindTooltip(
+                `<div>
+                     Trial 2 · 150 m · Geographic distance, not signal or coverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_716b3217753ef2b54d5393a43c43f5b5 = L.circle(
+                [-0.17471069990614604, -78.48516267975725],
+                {"bubblingMouseEvents": true, "color": "#73B99F", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#73B99F", "fillOpacity": 0.055, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 100, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            circle_716b3217753ef2b54d5393a43c43f5b5.bindTooltip(
+                `<div>
+                     Trial 2 · 100 m · Geographic distance, not signal or coverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_91abe1ebe07aa37b6d02af4fc58c9575 = L.circle(
+                [-0.17471069990614604, -78.48516267975725],
+                {"bubblingMouseEvents": true, "color": "#58A7C8", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#58A7C8", "fillOpacity": 0.055, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.8, "radius": 50, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            circle_91abe1ebe07aa37b6d02af4fc58c9575.bindTooltip(
+                `<div>
+                     Trial 2 · 50 m · Geographic distance, not signal or coverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_92d4c2cd3007561179e9763b2ee6df58 = L.marker(
+                [-0.17863029008450823, -78.48212084545311],
+                {
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_f263e859ca95db92f5f19455ce098169 = L.divIcon({
+  "html": "\u003cspan class=\"ring-chip\" style=\"--chip:#66333B;--line:#A97073\"\u003e550 m\u003c/span\u003e",
+  "iconSize": [72, 24],
+  "iconAnchor": [36, 12],
+  "className": "empty",
+});
+        
+    
+            marker_92d4c2cd3007561179e9763b2ee6df58.bindTooltip(
+                `<div>
+                     Trial 2 · 550 m
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_92d4c2cd3007561179e9763b2ee6df58.setIcon(div_icon_f263e859ca95db92f5f19455ce098169);
+            
+    
+            var marker_37e106e3969fbe452cce007812bda73f = L.marker(
+                [-0.17720498462508796, -78.48322696716589],
+                {
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_2bbe176a09eb5af278242c26a60ba879 = L.divIcon({
+  "html": "\u003cspan class=\"ring-chip\" style=\"--chip:#794020;--line:#C97F51\"\u003e350 m\u003c/span\u003e",
+  "iconSize": [72, 24],
+  "iconAnchor": [36, 12],
+  "className": "empty",
+});
+        
+    
+            marker_37e106e3969fbe452cce007812bda73f.bindTooltip(
+                `<div>
+                     Trial 2 · 350 m
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_37e106e3969fbe452cce007812bda73f.setIcon(div_icon_2bbe176a09eb5af278242c26a60ba879);
+            
+    
+            var marker_9e8b3d0065e1621dc696aef31779b971 = L.marker(
+                [-0.17613600548541378, -78.48405655833945],
+                {
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_449979bed40715b462f7c71493654ed7 = L.divIcon({
+  "html": "\u003cspan class=\"ring-chip\" style=\"--chip:#784C1F;--line:#D9A34D\"\u003e200 m\u003c/span\u003e",
+  "iconSize": [72, 24],
+  "iconAnchor": [36, 12],
+  "className": "empty",
+});
+        
+    
+            marker_9e8b3d0065e1621dc696aef31779b971.bindTooltip(
+                `<div>
+                     Trial 2 · 200 m
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9e8b3d0065e1621dc696aef31779b971.setIcon(div_icon_449979bed40715b462f7c71493654ed7);
+            
+    
+            var marker_84435e24aaf32340df49e07d374f0fcb = L.marker(
+                [-0.17577967909697625, -78.4843330887096],
+                {
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_7dda4f101e5300e0f72623c9e3e1c766 = L.divIcon({
+  "html": "\u003cspan class=\"ring-chip\" style=\"--chip:#555F20;--line:#C1C05F\"\u003e150 m\u003c/span\u003e",
+  "iconSize": [72, 24],
+  "iconAnchor": [36, 12],
+  "className": "empty",
+});
+        
+    
+            marker_84435e24aaf32340df49e07d374f0fcb.bindTooltip(
+                `<div>
+                     Trial 2 · 150 m
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_84435e24aaf32340df49e07d374f0fcb.setIcon(div_icon_7dda4f101e5300e0f72623c9e3e1c766);
+            
+    
+            var marker_80bda5aad434a3fd7854928bc7e5e8a8 = L.marker(
+                [-0.17542335270428003, -78.48460961906927],
+                {
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_48c483f0ba2d570f016b43b291d67f06 = L.divIcon({
+  "html": "\u003cspan class=\"ring-chip\" style=\"--chip:#1E634B;--line:#73B99F\"\u003e100 m\u003c/span\u003e",
+  "iconSize": [72, 24],
+  "iconAnchor": [36, 12],
+  "className": "empty",
+});
+        
+    
+            marker_80bda5aad434a3fd7854928bc7e5e8a8.bindTooltip(
+                `<div>
+                     Trial 2 · 100 m
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_80bda5aad434a3fd7854928bc7e5e8a8.setIcon(div_icon_48c483f0ba2d570f016b43b291d67f06);
+            
+    
+            var marker_6036b92c0a49f65fa331a68222b1f495 = L.marker(
+                [-0.17506702630733376, -78.48488614941849],
+                {
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_9c05091f53ea931ea2ed58e146da0610 = L.divIcon({
+  "html": "\u003cspan class=\"ring-chip\" style=\"--chip:#145873;--line:#58A7C8\"\u003e50 m\u003c/span\u003e",
+  "iconSize": [72, 24],
+  "iconAnchor": [36, 12],
+  "className": "empty",
+});
+        
+    
+            marker_6036b92c0a49f65fa331a68222b1f495.bindTooltip(
+                `<div>
+                     Trial 2 · 50 m
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6036b92c0a49f65fa331a68222b1f495.setIcon(div_icon_9c05091f53ea931ea2ed58e146da0610);
+            
+    
+            var marker_eab809b03065a6845b3cc6765a68ac92 = L.marker(
+                [-0.17471069990614604, -78.48516267975725],
+                {
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_4244271bb4314d4df21653e4f8593451 = L.divIcon({
+  "html": "\u003cdiv class=\"receiver-pin\"\u003e\u003cspan class=\"rx-icon\"\u003eRX\u003c/span\u003e\u003cb\u003eJO01\u003c/b\u003e\u003c/div\u003e",
+  "iconSize": [44, 53],
+  "iconAnchor": [22, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_d04f7e3b2d4580dc6d9d4b7ccf776f68 = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_fc50477fd1ead11b6a4da54621138b3a = $(`<div id="html_fc50477fd1ead11b6a4da54621138b3a" style="width: 100.0%; height: 100.0%;"><div class="geo-popup"><strong>JO01 · Fixed receiver</strong><small>Trial 2</small><code>-0.1747106999, -78.4851626798</code></div></div>`)[0];
+                popup_d04f7e3b2d4580dc6d9d4b7ccf776f68.setContent(html_fc50477fd1ead11b6a4da54621138b3a);
+            
+        
+
+        marker_eab809b03065a6845b3cc6765a68ac92.bindPopup(popup_d04f7e3b2d4580dc6d9d4b7ccf776f68)
+        ;
+
+        
+    
+    
+            marker_eab809b03065a6845b3cc6765a68ac92.bindTooltip(
+                `<div>
+                     JO01 · Trial 2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_eab809b03065a6845b3cc6765a68ac92.setIcon(div_icon_4244271bb4314d4df21653e4f8593451);
+            
+    
+            var marker_d31ee52ea41ef5ab1e161649fcc64d7b = L.marker(
+                [-0.1745274, -78.4842578],
+                {
+  "riseOnHover": true,
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_5188a0c70284aca07bc0c643ee68f25f = L.divIcon({
+  "html": "\u003cdiv class=\"geo-pin\" style=\"--pin:#28784f\"\u003e\u003cspan\u003e5\u003c/span\u003e\u003c/div\u003e",
+  "iconSize": [40, 42],
+  "iconAnchor": [20, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_d531543705d273c079050af689e6a523 = L.popup({
+  "maxWidth": 330,
+});
+
+        
+            
+                var html_576bc02d18f87eaf1e4db2a6d60e1661 = $(`<div id="html_576bc02d18f87eaf1e4db2a6d60e1661" style="width: 100.0%; height: 100.0%;"><div class="geo-popup" style="--status:#28784f"><strong>Point 5 · Trial 2</strong><small>102.7 m from receiver</small><code>-0.1745274, -78.4842578</code><small>Time: 23/11/2026 13:21</small><em>Found on JO01 and JO02</em><small>Time from JO02 log · clock not synchronized</small></div></div>`)[0];
+                popup_d531543705d273c079050af689e6a523.setContent(html_576bc02d18f87eaf1e4db2a6d60e1661);
+            
+        
+
+        marker_d31ee52ea41ef5ab1e161649fcc64d7b.bindPopup(popup_d531543705d273c079050af689e6a523)
+        ;
+
+        
+    
+    
+            marker_d31ee52ea41ef5ab1e161649fcc64d7b.bindTooltip(
+                `<div>
+                     Point 5 · 102.7 m · Found on JO01 and JO02
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d31ee52ea41ef5ab1e161649fcc64d7b.setIcon(div_icon_5188a0c70284aca07bc0c643ee68f25f);
+            
+    
+            var marker_51c672f49cc810a47d12ab5bdf230b5d = L.marker(
+                [-0.1736275, -78.4844757],
+                {
+  "riseOnHover": true,
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_75d31ee1931dac34ea48ab76c140c9c8 = L.divIcon({
+  "html": "\u003cdiv class=\"geo-pin\" style=\"--pin:#28784f\"\u003e\u003cspan\u003e6\u003c/span\u003e\u003c/div\u003e",
+  "iconSize": [40, 42],
+  "iconAnchor": [20, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_684cf9a7e09d1066ccaac6a92e83ebda = L.popup({
+  "maxWidth": 330,
+});
+
+        
+            
+                var html_75d27352dc4d34ca1c5b40aa442c7ac7 = $(`<div id="html_75d27352dc4d34ca1c5b40aa442c7ac7" style="width: 100.0%; height: 100.0%;"><div class="geo-popup" style="--status:#28784f"><strong>Point 6 · Trial 2</strong><small>142.1 m from receiver</small><code>-0.1736275, -78.4844757</code><small>Time: 23/11/2026 13:24</small><em>Found on JO01 and JO02</em><small>Time from JO02 log · clock not synchronized</small></div></div>`)[0];
+                popup_684cf9a7e09d1066ccaac6a92e83ebda.setContent(html_75d27352dc4d34ca1c5b40aa442c7ac7);
+            
+        
+
+        marker_51c672f49cc810a47d12ab5bdf230b5d.bindPopup(popup_684cf9a7e09d1066ccaac6a92e83ebda)
+        ;
+
+        
+    
+    
+            marker_51c672f49cc810a47d12ab5bdf230b5d.bindTooltip(
+                `<div>
+                     Point 6 · 142.1 m · Found on JO01 and JO02
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_51c672f49cc810a47d12ab5bdf230b5d.setIcon(div_icon_75d31ee1931dac34ea48ab76c140c9c8);
+            
+    
+            var marker_f37d1d005ad34e5c8f9822c2b8ccc286 = L.marker(
+                [-0.1732269, -78.4843711],
+                {
+  "riseOnHover": true,
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_2eccad7fb1cbdb3c87f727c50e068b4c = L.divIcon({
+  "html": "\u003cdiv class=\"geo-pin\" style=\"--pin:#28784f\"\u003e\u003cspan\u003e7\u003c/span\u003e\u003c/div\u003e",
+  "iconSize": [40, 42],
+  "iconAnchor": [20, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_3f6cecd3f6374bc61e1fcdac331b6bbb = L.popup({
+  "maxWidth": 330,
+});
+
+        
+            
+                var html_1cc9b83c84fa95f4ce408c635e5639ca = $(`<div id="html_1cc9b83c84fa95f4ce408c635e5639ca" style="width: 100.0%; height: 100.0%;"><div class="geo-popup" style="--status:#28784f"><strong>Point 7 · Trial 2</strong><small>186.2 m from receiver</small><code>-0.1732269, -78.4843711</code><small>Time: 23/11/2026 13:26</small><em>Found on JO01 and JO02</em><small>Time from JO02 log · clock not synchronized</small></div></div>`)[0];
+                popup_3f6cecd3f6374bc61e1fcdac331b6bbb.setContent(html_1cc9b83c84fa95f4ce408c635e5639ca);
+            
+        
+
+        marker_f37d1d005ad34e5c8f9822c2b8ccc286.bindPopup(popup_3f6cecd3f6374bc61e1fcdac331b6bbb)
+        ;
+
+        
+    
+    
+            marker_f37d1d005ad34e5c8f9822c2b8ccc286.bindTooltip(
+                `<div>
+                     Point 7 · 186.2 m · Found on JO01 and JO02
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f37d1d005ad34e5c8f9822c2b8ccc286.setIcon(div_icon_2eccad7fb1cbdb3c87f727c50e068b4c);
+            
+    
+            var marker_78249149a6048d43ef855ccf2d4863a8 = L.marker(
+                [-0.1718569, -78.4839373],
+                {
+  "riseOnHover": true,
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_855de8d6632f61ee76477ecb8d3ff5c4 = L.divIcon({
+  "html": "\u003cdiv class=\"geo-pin\" style=\"--pin:#ae7838\"\u003e\u003cspan\u003e8\u003c/span\u003e\u003c/div\u003e",
+  "iconSize": [40, 42],
+  "iconAnchor": [20, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_dd56af3e385f624afe00041a98d9ed88 = L.popup({
+  "maxWidth": 330,
+});
+
+        
+            
+                var html_aca3446f6a061a64e577835025e00424 = $(`<div id="html_aca3446f6a061a64e577835025e00424" style="width: 100.0%; height: 100.0%;"><div class="geo-popup" style="--status:#ae7838"><strong>Point 8 · Trial 2</strong><small>343.8 m from receiver</small><code>-0.1718569, -78.4839373</code><small>Time: 23/11/2026 13:30</small><em>Only logged by JO02 (no documented reception)</em><small>Time from JO02 log · clock not synchronized</small></div></div>`)[0];
+                popup_dd56af3e385f624afe00041a98d9ed88.setContent(html_aca3446f6a061a64e577835025e00424);
+            
+        
+
+        marker_78249149a6048d43ef855ccf2d4863a8.bindPopup(popup_dd56af3e385f624afe00041a98d9ed88)
+        ;
+
+        
+    
+    
+            marker_78249149a6048d43ef855ccf2d4863a8.bindTooltip(
+                `<div>
+                     Point 8 · 343.8 m · Only logged by JO02 (no documented reception)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_78249149a6048d43ef855ccf2d4863a8.setIcon(div_icon_855de8d6632f61ee76477ecb8d3ff5c4);
+            
+    
+            var marker_a3d91df00f51eff6ef9cc8eab985edd8 = L.marker(
+                [-0.1701876, -78.4837616],
+                {
+  "riseOnHover": true,
+}
+            ).addTo(feature_group_a39a063843f3bfbd52d180380456259b);
+        
+    
+            var div_icon_0f94df371a57b52fec065db09cebb1d9 = L.divIcon({
+  "html": "\u003cdiv class=\"geo-pin\" style=\"--pin:#ae7838\"\u003e\u003cspan\u003e9\u003c/span\u003e\u003c/div\u003e",
+  "iconSize": [40, 42],
+  "iconAnchor": [20, 39],
+  "className": "empty",
+});
+        
+    
+        var popup_6c4f731c7ba3eb0e11ef43571e4789b1 = L.popup({
+  "maxWidth": 330,
+});
+
+        
+            
+                var html_3bc683ce977440f595c7b8d1837d7f3c = $(`<div id="html_3bc683ce977440f595c7b8d1837d7f3c" style="width: 100.0%; height: 100.0%;"><div class="geo-popup" style="--status:#ae7838"><strong>Point 9 · Trial 2</strong><small>523.9 m from receiver</small><code>-0.1701876, -78.4837616</code><small>Time: 23/11/2026 13:34</small><em>Only logged by JO02 (no documented reception)</em><small>Time from JO02 log · clock not synchronized</small></div></div>`)[0];
+                popup_6c4f731c7ba3eb0e11ef43571e4789b1.setContent(html_3bc683ce977440f595c7b8d1837d7f3c);
+            
+        
+
+        marker_a3d91df00f51eff6ef9cc8eab985edd8.bindPopup(popup_6c4f731c7ba3eb0e11ef43571e4789b1)
+        ;
+
+        
+    
+    
+            marker_a3d91df00f51eff6ef9cc8eab985edd8.bindTooltip(
+                `<div>
+                     Point 9 · 523.9 m · Only logged by JO02 (no documented reception)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a3d91df00f51eff6ef9cc8eab985edd8.setIcon(div_icon_0f94df371a57b52fec065db09cebb1d9);
+            
+    
+            feature_group_a39a063843f3bfbd52d180380456259b.addTo(map_4986a8bc0f461377276965eb795ad5e5);
+        
+    
+            var layer_control_00e32cef884310ae4d6fe6ad900b3a62_layers = {
+                base_layers : {
+                    "ESRI \u00b7 Satellite" : tile_layer_d1e44d883b0dc3dc88c4aa5ec2ae0d65,
+                    "ESRI \u00b7 Topographic" : tile_layer_5708ec5ec1dfc826472231fd0dccb631,
+                    "OpenStreetMap" : tile_layer_63fe4a118f6152cf17137d5ad0e5151c,
+                    "CARTO \u00b7 Light" : tile_layer_2b89c78ae816d81617d7522d6cb8f9a0,
+                },
+                overlays :  {
+                    "Trial 1 \u00b7 first route" : feature_group_61885a1e79b7f617899d40ef56c7d4a6,
+                    "Trial 2 \u00b7 midday" : feature_group_a39a063843f3bfbd52d180380456259b,
+                },
+            };
+            let layer_control_00e32cef884310ae4d6fe6ad900b3a62 = L.control.layers(
+                layer_control_00e32cef884310ae4d6fe6ad900b3a62_layers.base_layers,
+                layer_control_00e32cef884310ae4d6fe6ad900b3a62_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_4986a8bc0f461377276965eb795ad5e5);
+
+        
+    
+            map_4986a8bc0f461377276965eb795ad5e5.fitBounds(
+                [[-0.2071, -78.487], [-0.1687, -78.48]],
+                {}
+            );
+        
+</script>
+</html>
